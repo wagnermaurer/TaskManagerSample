@@ -82,13 +82,3 @@ frontend/
       TaskList.jsx
       TaskItem.jsx
 ```
-
----
-
-## Assumptions & what was left out
-
-- **In-memory DB** - data resets on every API restart, per the test brief.
-- **No auth** - out of scope for this exercise.
-- **No pagination / filtering / edit** - only the four endpoints listed above. Delete was added as an extra (per the brief's "add any features you feel are missing"); editing the title was left out.
-- **No frontend build pipeline** - the React app loads via CDN with Babel standalone in the browser. See the Prerequisites note above for the trade-off.
-- **Validation** - basic `[Required]` + `StringLength(200)` on `CreateTaskRequest` and a `Title` invariant in the entity constructor. No global exception middleware; ASP.NET's default `ProblemDetails` is sufficient here.
