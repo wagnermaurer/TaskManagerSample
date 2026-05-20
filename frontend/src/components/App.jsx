@@ -2,6 +2,7 @@ function App() {
   const [tasks, setTasks] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
+  const [sort, setSort] = React.useState({ field: "createdAt", direction: "desc" });
 
   React.useEffect(() => {
     (async () => {
@@ -15,6 +16,25 @@ function App() {
       }
     })();
   }, []);
+
+  const sortedTasks = React.useMemo(() => {
+    const copy = [...tasks];
+    copy.sort((a, b) => {
+      const cmp = sort.field === "title"
+        ? a.title.localeCompare(b.title)
+        : Date.parse(a.createdAt) - Date.parse(b.createdAt);
+      return sort.direction === "asc" ? cmp : -cmp;
+    });
+    return copy;
+  }, [tasks, sort]);
+
+  function handleSort(field) {
+    setSort((prev) =>
+      prev.field === field
+        ? { field, direction: prev.direction === "asc" ? "desc" : "asc" }
+        : { field, direction: "asc" }
+    );
+  }
 
   async function handleAdd(title) {
     try {
@@ -50,7 +70,13 @@ function App() {
       {loading && <p className="loading">Loading…</p>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && (
-        <TaskList tasks={tasks} onToggle={handleToggle} onDelete={handleDelete} />
+        <TaskList
+          tasks={sortedTasks}
+          sort={sort}
+          onSort={handleSort}
+          onToggle={handleToggle}
+          onDelete={handleDelete}
+        />
       )}
       <Footer />
     </main>

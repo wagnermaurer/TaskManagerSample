@@ -14,9 +14,13 @@ public static class DatabaseSeeder
 
         if (db.Tasks.Any()) return;
 
+        var now = DateTime.UtcNow;
+        
         for (var i = 1; i <= 10; i++)
         {
-            db.Tasks.Add(new TaskItem($"TASK #{i} - Example"));
+            var task = new TaskItem($"TASK #{i} - Example");
+            db.Tasks.Add(task);
+            db.Entry(task).Property(t => t.CreatedAt).CurrentValue = now.AddHours(-(i - 1));
         }
         db.SaveChanges();
     }

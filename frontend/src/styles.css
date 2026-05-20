@@ -58,21 +58,53 @@ body {
 .add-form button:hover:not(:disabled) { background: var(--accent-hover); }
 .add-form button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.task-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.task-list-wrapper {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 8px;
   overflow: hidden;
 }
 
+.task-list-header,
 .task-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 18px 1fr 140px 30px;
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
+}
+
+.task-list-header {
+  background: #f0f3f6;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.task-sort-button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.task-sort-button:hover { color: var(--text); }
+.task-sort-button.active { color: var(--text); }
+.task-list-header .task-sort-button:last-of-type { text-align: right; }
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
   border-bottom: 1px solid var(--border);
   cursor: pointer;
   user-select: none;
@@ -92,7 +124,14 @@ body {
   color: var(--muted);
 }
 
-.task-title { flex: 1; }
+.task-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.task-created {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
 
 .task-delete {
   background: none;
@@ -103,6 +142,7 @@ body {
   padding: 0 0.25rem;
   cursor: pointer;
   border-radius: 4px;
+  justify-self: end;
 }
 
 .task-delete:hover {

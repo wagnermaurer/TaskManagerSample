@@ -4,6 +4,11 @@ function TaskItem({ task, onToggle, onDelete }) {
     onDelete(task.id);
   }
 
+  const createdLabel = new Date(task.createdAt).toLocaleString(undefined, {
+    dateStyle: "short",
+    timeStyle: "short",
+  });
+
   return (
     <li
       className={`task-item ${task.isCompleted ? "completed" : ""}`}
@@ -16,6 +21,7 @@ function TaskItem({ task, onToggle, onDelete }) {
         onClick={(e) => e.stopPropagation()}
       />
       <span className="task-title">{task.title}</span>
+      <span className="task-created">{createdLabel}</span>
       <button
         type="button"
         className="task-delete"
