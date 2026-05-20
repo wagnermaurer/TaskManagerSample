@@ -12,7 +12,7 @@ A small task management app: create tasks, list them, and toggle completion.
 - **.NET 10 SDK** (`dotnet --version` → `10.0.x`)
 - **Python 3** (only used to serve the static frontend on port `5173`)
 
-> A browser-only frontend was chosen instead of Vite because the local Node version (14) is below Vite's minimum (18). The trade-off is documented in [CLAUDE.md](./CLAUDE.md).
+> A browser-only frontend was chosen instead of Vite because the local Node version (14) is below Vite's minimum (18). The trade-off: slower first paint (Babel transforms JSX in the browser) and no production build; in exchange, there is no tooling between the source and what runs.
 
 ---
 
@@ -92,5 +92,5 @@ frontend/
 - **In-memory DB** - data resets on every API restart, per the test brief.
 - **No auth** - out of scope for this exercise.
 - **No pagination / filtering / edit** - only the four endpoints listed above. Delete was added as an extra (per the brief's "add any features you feel are missing"); editing the title was left out.
-- **No frontend build pipeline** - see CLAUDE.md for the trade-off.
+- **No frontend build pipeline** - the React app loads via CDN with Babel standalone in the browser. See the Prerequisites note above for the trade-off.
 - **Validation** - basic `[Required]` + `StringLength(200)` on `CreateTaskRequest` and a `Title` invariant in the entity constructor. No global exception middleware; ASP.NET's default `ProblemDetails` is sufficient here.
