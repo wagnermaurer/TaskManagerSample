@@ -12,8 +12,6 @@ A small task management app: create tasks, list them, and toggle completion.
 - **.NET 10 SDK** (`dotnet --version` → `10.0.x`)
 - **Python 3** (only used to serve the static frontend on port `5173`)
 
-> A browser-only frontend was chosen instead of Vite because the local Node version (14) is below Vite's minimum (18). The trade-off: slower first paint (Babel transforms JSX in the browser) and no production build; in exchange, there is no tooling between the source and what runs.
-
 ---
 
 ## Running the app
