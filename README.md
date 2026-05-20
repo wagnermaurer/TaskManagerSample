@@ -9,8 +9,8 @@ A small task management app: create tasks, list them, and toggle completion.
 
 ## Prerequisites
 
-- **.NET 10 SDK** (`dotnet --version` → `10.0.x`)
-- **Python 3** (only used to serve the static frontend on port `5173`)
+- **.NET 10 SDK**
+- **Python 3** - only used to serve the static frontend on port `5173`
 
 ---
 
