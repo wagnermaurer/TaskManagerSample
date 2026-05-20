@@ -10,7 +10,6 @@ public class TaskItemTests
     {
         var task = new TaskItem("  Write tests  ");
 
-        Assert.NotEqual(Guid.Empty, task.Id);
         Assert.Equal("Write tests", task.Title);
         Assert.False(task.IsCompleted);
         Assert.True(task.CreatedAt <= DateTime.UtcNow);

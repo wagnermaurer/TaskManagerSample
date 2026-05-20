@@ -8,25 +8,26 @@ namespace TaskManager.Tests.Application;
 
 public class TaskServiceTests
 {
+    // xUnit creates a fresh instance per test, so these are isolated.
+    private readonly FakeTaskRepository _repo = new();
+    private readonly TaskService _service;
+
+    public TaskServiceTests() => _service = new TaskService(_repo);
+
     [Fact]
     public async Task CreateAsync_PersistsAndReturnsDto()
     {
-        var repo = new FakeTaskRepository();
-        var service = new TaskService(repo);
-
-        var dto = await service.CreateAsync(new CreateTaskRequest { Title = "Ship it" });
+        var dto = await _service.CreateAsync(new CreateTaskRequest { Title = "Ship it" });
 
         Assert.Equal("Ship it", dto.Title);
         Assert.False(dto.IsCompleted);
-        Assert.Single(repo.Store);
+        Assert.Single(_repo.Store);
     }
 
     [Fact]
     public async Task ToggleAsync_ReturnsNull_WhenTaskMissing()
     {
-        var service = new TaskService(new FakeTaskRepository());
-
-        var result = await service.ToggleAsync(Guid.NewGuid());
+        var result = await _service.ToggleAsync(Guid.NewGuid());
 
         Assert.Null(result);
     }
@@ -34,13 +35,11 @@ public class TaskServiceTests
     [Fact]
     public async Task ToggleAsync_FlipsCompletion()
     {
-        var repo = new FakeTaskRepository();
         var existing = new TaskItem("Read book");
-        await repo.AddAsync(existing);
-        var service = new TaskService(repo);
+        await _repo.AddAsync(existing);
 
-        var first = await service.ToggleAsync(existing.Id);
-        var second = await service.ToggleAsync(existing.Id);
+        var first = await _service.ToggleAsync(existing.Id);
+        var second = await _service.ToggleAsync(existing.Id);
 
         Assert.True(first!.IsCompleted);
         Assert.False(second!.IsCompleted);
@@ -49,23 +48,19 @@ public class TaskServiceTests
     [Fact]
     public async Task DeleteAsync_ReturnsTrue_AndRemovesTask_WhenFound()
     {
-        var repo = new FakeTaskRepository();
         var existing = new TaskItem("Throw away");
-        await repo.AddAsync(existing);
-        var service = new TaskService(repo);
+        await _repo.AddAsync(existing);
 
-        var deleted = await service.DeleteAsync(existing.Id);
+        var deleted = await _service.DeleteAsync(existing.Id);
 
         Assert.True(deleted);
-        Assert.Empty(repo.Store);
+        Assert.Empty(_repo.Store);
     }
 
     [Fact]
     public async Task DeleteAsync_ReturnsFalse_WhenTaskMissing()
     {
-        var service = new TaskService(new FakeTaskRepository());
-
-        var deleted = await service.DeleteAsync(Guid.NewGuid());
+        var deleted = await _service.DeleteAsync(Guid.NewGuid());
 
         Assert.False(deleted);
     }
