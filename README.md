@@ -14,6 +14,32 @@ A small task management app: create tasks, list them, and toggle completion.
 
 ---
 
+## Project structure
+
+```
+backend/
+  src/
+    TaskManager.Domain/          # Entities, business rules (no dependencies)
+    TaskManager.Application/     # DTOs, service interfaces, use cases
+    TaskManager.Infrastructure/  # EF Core DbContext + repository
+    TaskManager.Api/             # Controllers, Program.cs, CORS, DI
+  tests/
+    TaskManager.Tests/           # xUnit tests
+
+frontend/
+  index.html
+  src/
+    api.js                       # fetch wrapper for the API
+    main.jsx                     # React entry point
+    styles.css
+    components/
+      App.jsx                    # State + data flow
+      AddTaskForm.jsx
+      TaskList.jsx
+      TaskItem.jsx
+```
+
+
 ## Running the app
 
 Open **two terminals**.
@@ -57,28 +83,3 @@ dotnet test
 Covers the `TaskItem` domain entity and `TaskService` orchestration with a fake repository.
 
 ---
-
-## Project structure
-
-```
-backend/
-  src/
-    TaskManager.Domain/          # Entities, business rules (no dependencies)
-    TaskManager.Application/     # DTOs, service interfaces, use cases
-    TaskManager.Infrastructure/  # EF Core DbContext + repository
-    TaskManager.Api/             # Controllers, Program.cs, CORS, DI
-  tests/
-    TaskManager.Tests/           # xUnit tests
-
-frontend/
-  index.html
-  src/
-    api.js                       # fetch wrapper for the API
-    main.jsx                     # React entry point
-    styles.css
-    components/
-      App.jsx                    # State + data flow
-      AddTaskForm.jsx
-      TaskList.jsx
-      TaskItem.jsx
-```
