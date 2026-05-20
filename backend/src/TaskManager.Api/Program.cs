@@ -1,5 +1,6 @@
 using TaskManager.Application;
 using TaskManager.Infrastructure;
+using TaskManager.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,8 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 
 var app = builder.Build();
+
+app.Services.SeedTasks();
 
 if (app.Environment.IsDevelopment())
 {

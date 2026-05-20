@@ -117,3 +117,15 @@ body {
 }
 
 .error { color: var(--danger); }
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.footer em {
+  font-style: italic;
+  color: var(--text);
+}

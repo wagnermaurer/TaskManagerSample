@@ -52,6 +52,7 @@ function App() {
       {!loading && !error && (
         <TaskList tasks={tasks} onToggle={handleToggle} onDelete={handleDelete} />
       )}
+      <Footer />
     </main>
   );
 }
